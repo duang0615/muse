@@ -1,0 +1,121 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "StockQA",
+  "description": "財報狗風格股票問答的結構化輸出。生成端與解析端共用。",
+  "type": "object",
+  "required": [
+    "stock_code", "stock_name", "question", "run_id", "run_date",
+    "references", "table_years", "eps_by_year", "followups",
+    "fixed_questions", "disclaimer"
+  ],
+  "properties": {
+    "stock_code": { "type": "string" },
+    "stock_name": { "type": "string" },
+    "question": { "type": "string" },
+    "thread_id": { "type": ["string", "null"] },
+    "run_id": { "type": "string", "description": "每次提問唯一,不可覆寫前一次" },
+    "run_date": { "type": "string", "format": "date" },
+    "duplicate_of": { "type": ["string", "null"] },
+
+    "references": {
+      "type": "object",
+      "required": ["internal_count", "public"],
+      "properties": {
+        "internal_count": { "type": "integer", "minimum": 0, "description": "內部研究報告只存數量" },
+        "public": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["title", "url"],
+            "properties": { "title": { "type": "string" }, "url": { "type": "string" } }
+          }
+        }
+      }
+    },
+
+    "table_years": {
+      "type": "array",
+      "description": "從主表第一欄抓,不從問題或追問推",
+      "items": { "type": "integer" }
+    },
+    "table_columns_raw": { "type": "array", "items": { "type": "string" } },
+
+    "eps_by_year": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["absolute_year", "relative_year"],
+        "properties": {
+          "absolute_year": { "type": "integer" },
+          "relative_year": { "type": "string", "pattern": "^Y[1-9]$" },
+          "is_actual": { "type": "boolean", "default": false },
+          "median": { "type": ["number", "null"] },
+          "average": { "type": ["number", "null"] },
+          "range_low": { "type": ["number", "null"] },
+          "range_high": { "type": ["number", "null"] },
+          "representative": { "type": ["number", "null"] },
+          "yoy": { "type": ["string", "null"] },
+          "pe": { "type": ["string", "null"] },
+          "revenue": { "type": ["string", "null"] },
+          "eps_note": { "type": ["string", "null"], "description": "無法對映的欄位一律放這裡" },
+          "eps_business": { "type": ["number", "null"], "description": "虧損/業外收益檔:本業 EPS" },
+          "eps_with_disposal": { "type": ["number", "null"], "description": "含資產處分等業外收益的 EPS" },
+          "disposal_note": { "type": ["string", "null"] },
+          "share_base_note": { "type": ["string", "null"], "description": "股數基礎不同時的提醒" }
+        }
+      }
+    },
+
+    "second_table": { "type": ["object", "null"] },
+    "concept_stocks": { "type": ["array", "null"], "items": { "type": "string" } },
+
+    "sections": {
+      "type": "array",
+      "description": "自由區段,可為空;沒有小標就不要補假小標",
+      "items": {
+        "type": "object",
+        "properties": {
+          "section_title": { "type": "string" },
+          "section_points": { "type": "array", "items": { "type": "string" } },
+          "section_text": { "type": "string" }
+        }
+      }
+    },
+
+    "followups": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["text"],
+        "properties": {
+          "text": { "type": "string" },
+          "year": { "type": ["integer", "null"], "description": "追問提到的年份,必須屬於 table_years" }
+        }
+      }
+    },
+    "fixed_questions": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": { "type": "string" },
+      "description": "由程式寫死,不由 LLM 生成"
+    },
+
+    "disclaimer": { "type": "string", "minLength": 1 },
+    "flags": { "type": "array", "items": { "type": "string" } }
+  },
+
+  "header_keywords": {
+    "year": ["年度", "年份"],
+    "eps_range": ["區間"],
+    "eps_median": ["中位", "共識"],
+    "eps_average": ["平均"],
+    "eps_representative": ["代表", "概念", "約"],
+    "yoy": ["年增"],
+    "pe": ["本益比"],
+    "revenue": ["營收"],
+    "_fallback": "eps_note"
+  }
+}
