@@ -1,0 +1,73 @@
+{
+  "stock_code": "9999",
+  "stock_name": "範例股",
+  "question": "未來兩年預估 EPS",
+  "thread_id": null,
+  "run_id": "example-1",
+  "run_date": "2026-10-31",
+  "duplicate_of": null,
+  "references": {
+    "internal_count": 0,
+    "public": [
+      {
+        "title": "(範例)公開資訊來源標題",
+        "url": "https://example.com/source-1"
+      }
+    ]
+  },
+  "table_years": [
+    2026,
+    2027
+  ],
+  "table_columns_raw": [
+    "年度",
+    "EPS 區間",
+    "中位數",
+    "主要驅動"
+  ],
+  "eps_by_year": [
+    {
+      "absolute_year": 2026,
+      "relative_year": "Y1",
+      "representative": 10.0,
+      "range_low": 9.5,
+      "range_high": 10.5
+    },
+    {
+      "absolute_year": 2027,
+      "relative_year": "Y2",
+      "representative": 11.5,
+      "range_low": 10.5,
+      "range_high": 12.6
+    }
+  ],
+  "second_table": null,
+  "concept_stocks": null,
+  "sections": [],
+  "followups": [
+    {
+      "text": "(範例)2027 年成長的主要假設是什麼?",
+      "year": 2027
+    },
+    {
+      "text": "(範例)2026 年第四季營收若低於近三月平均,EPS 會怎麼變?",
+      "year": 2026
+    },
+    {
+      "text": "(範例)淨利率回到近四季最低時,影響多大?",
+      "year": null
+    }
+  ],
+  "fixed_questions": [
+    "公司主要做什麼",
+    "產業前景概況",
+    "市場在看哪些題材",
+    "主要客戶是誰",
+    "產品營收佔比",
+    "競爭對手與優劣勢",
+    "公司後續展望",
+    "未來兩年預估 EPS"
+  ],
+  "disclaimer": "以上為市場預估彙整,非公司財測,僅供參考,不構成買賣建議。資料來源:公開資訊觀測站、證交所、櫃買中心及所列來源。",
+  "flags": []
+}

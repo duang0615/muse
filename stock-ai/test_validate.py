@@ -11,7 +11,7 @@ TODAY = date(2026, 10, 31)
 
 
 def load():
-    with open(os.path.join(HERE, "examples", "2327_pass.json"), encoding="utf-8") as fh:
+    with open(os.path.join(HERE, "examples", "sample_pass.json"), encoding="utf-8") as fh:
         return json.load(fh)
 
 
